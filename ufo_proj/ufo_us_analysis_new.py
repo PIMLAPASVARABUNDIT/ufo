@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
+import os
 
 st.set_page_config(page_title="アメリカのUFO目撃データ分析", layout="wide")
 
@@ -71,7 +72,7 @@ STATE_MAP = {
 # ─── データ読み込み ─────────────────────────────────────────────
 @st.cache_data
 def load_data():
-    df = pd.read_csv("ufo_us.csv")
+    df = pd.read_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), "ufo_us.csv"))
     df = df.drop(columns=["Unnamed: 0", "country"], errors="ignore")
     df["datetime"] = pd.to_datetime(df["datetime"], errors="coerce")
     df["year"]  = df["datetime"].dt.year
